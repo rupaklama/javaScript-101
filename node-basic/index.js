@@ -21,7 +21,7 @@ const lstat = fs.promises.lstat;
 
 // note - process.argv property returns an array containing the command-line arguments passed
 // when the Node.js process was launched.
-console.log(process.argv);
+// console.log(process.argv);
 
 // passing additional args for path dir
 const targetDir = process.argv[2] || process.cwd();
