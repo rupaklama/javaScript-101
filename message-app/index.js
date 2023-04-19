@@ -7,6 +7,7 @@ const messageForm = document.querySelector('#message-form');
 const messageShow = document.querySelector('#message-show');
 const linkForm = document.querySelector('#link-form');
 
+// # - to store data temporarily in the browser
 const { hash } = window.location;
 // console.log(atob(hash.replace('#', '')));
 

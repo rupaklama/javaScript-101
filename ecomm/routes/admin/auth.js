@@ -8,14 +8,14 @@ const signinTemplate = require('../../views/admin/auth/signin');
 
 const router = express.Router();
 
-router.get('/signup', (req, res) => {
+router.get('/users/signup', (req, res) => {
   res.send(signupTemplate({ req }));
 });
 
 // Validation checks if an input meets a set of criteria
 // Sanitization modifies the input to ensure that it is valid (such as removing white spaces).
 router.post(
-  '/signup',
+  '/users/signup',
   [
     check('email')
       // note - usually we do Sanitization first
@@ -47,7 +47,9 @@ router.post(
       }),
   ],
   async (req, res) => {
-    // 'validationResult' - Extracts the validation errors of an express request
+    // 'validationResult' - Extracts the validation errors of an express request & returns it
+    //  msg: 'Invalid value' - default error message set with validationResult
+    // note - to customize the default message chain withMessage() in the validation
     const errors = validationResult(req);
 
     // note - if errors is not empty meaning on having errors
@@ -69,12 +71,16 @@ router.post(
     req.session.userId = user.id;
     // note - adding .userId property in the session object
 
-    res.send('Account created!!!');
+    res.status(200).send('Account created!!!');
   }
 );
 
+router.get('/users/signin', (req, res) => {
+  res.status(200).send(signinTemplate({}));
+});
+
 router.post(
-  '/signin',
+  '/users/signin',
   [
     check('email')
       .trim()
@@ -108,7 +114,7 @@ router.post(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.send(signinTemplate({ errors }));
+      return res.status(400).send(signinTemplate({ errors }));
     }
 
     const { email } = req.body;
@@ -117,17 +123,13 @@ router.post(
 
     req.session.userId = user.id;
 
-    res.send('You are signed in!!!');
+    res.status(200).send('You are signed in!!!');
   }
 );
 
-router.get('/signin', (req, res) => {
-  res.send(signinTemplate({}));
-});
-
-router.get('/signout', (req, res) => {
+router.get('/users/signout', (req, res) => {
   req.session = null;
-  res.send('You are logged out');
+  res.status(200).send('You are logged out');
 });
 
 module.exports = router;

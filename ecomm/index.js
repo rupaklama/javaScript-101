@@ -3,10 +3,18 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 
 const authRouter = require('./routes/admin/auth');
+const productsRouter = require('./routes/admin/products');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// server public dir in our root dir to the browser
+// Middleware to server Static files from local directory
+app.use(express.static(`${__dirname}/public`));
+// app.use(express.static('public'));
+
+// note - bodyParser does not work with "multipart/form-data" request
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(
   cookieSession({
@@ -17,6 +25,7 @@ app.use(
 );
 
 app.use(authRouter);
+app.use(productsRouter);
 
 app.listen(3002, () => {
   console.log('Listening @ 3002');
