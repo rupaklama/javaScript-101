@@ -1,11 +1,11 @@
 const util = require('util');
 
-// lib to hash & salt data
 const crypto = require('crypto');
 
 const Repository = require('./repository');
 
-// scrypt callback handler calls hash data
+// util.promisify - default 'util' lib returns a version with promises
+// scrypt callback handler is to hash data
 const scrypt = util.promisify(crypto.scrypt);
 
 // Using Repository Approach for data modeling
@@ -14,18 +14,18 @@ class UsersRepository extends Repository {
   async create(attrs) {
     attrs.id = this.randomId();
 
-    // generating salt with random letters & numbers
+    // Using randomBytes to generate random strings for salting
     const salt = crypto.randomBytes(8).toString('hex');
 
     // hashing & salting password into buffer data
-    // note - 'buffer' is an array with raw data in node js
-    const buf = await scrypt(attrs.password, salt, 64);
+    // note - 'buffer' is an array with raw data in node js, hashed data here
+    const buffer = await scrypt(attrs.password, salt, 64);
 
     const records = await this.getAll();
 
     const record = {
       ...attrs,
-      password: `${buf.toString('hex')}.${salt}`,
+      password: `${buffer.toString('hex')}.${salt}`,
     };
 
     // save the user cred with hash password in db
@@ -47,4 +47,6 @@ class UsersRepository extends Repository {
   }
 }
 
+// note - exporting instance of a class rather than the class to avoid importing issues
+// It also avoids of creating instance of a class again on other modules.
 module.exports = new UsersRepository('users.json');

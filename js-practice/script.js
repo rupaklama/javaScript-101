@@ -9,7 +9,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 /* scrolling */
-const btnScrollTo = document.querySelector('.btn--scroll-to');
+const btnScrollTo = document.querySelector('.btn--scroll-to'); // Learn more btn
 const section1 = document.querySelector('#section--1');
 
 // Event Delegation is when event bubbles up to the parent elements
@@ -30,7 +30,9 @@ const section1 = document.querySelector('#section--1');
 document.querySelector('.nav__links').addEventListener('click', e => {
   e.preventDefault();
 
-  // console.log('target', e.target, e.currentTarget);
+  // note - 'target' is the element that generated the event
+  // 'currentTarget' is the element that the addEventListener is attached too
+  console.log('target', e.target, e.currentTarget);
 
   // NOTE - The Event Bubbles up to the Parent element to make this work
   if (e.target.classList.contains('nav__link')) {
@@ -71,20 +73,22 @@ tabsContainer.addEventListener('click', e => {
     .classList.add('operations__content--active');
 });
 
-// TEST
+// TEST - OLD WAY
+// const btnScrollTo = document.querySelector('.btn--scroll-to'); // Learn more btn
+// const section1 = document.querySelector('#section--1');
 btnScrollTo.addEventListener('click', e => {
   // The getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
   // getBoundingClientRect() method returns a DOMRect object with eight properties: left, top, right, bottom, x, y, width, height.
   // note - x position value is measured from the left side, y value is from the top
   const s1coords = section1.getBoundingClientRect();
-  console.log('section', s1coords);
+  console.log('section1', s1coords);
 
-  // button
+  // Learn more btn
   console.log('button', e.target.getBoundingClientRect());
 
-  // scroll positions from the Browser Window
+  // Current Scroll Positions of the Browser Window, X - horizontal from left & Y - from TOP of the PAGE
   // pageXOffset - read-only Window property pageXOffset is an alias for scrollX
-  // pageYOffset - vertical scroll position from the top to the element
+  // pageYOffset - vertical scroll position from the top of the Page to the element
   console.log('Current scroll (x/y)', window.pageXOffset, window.pageYOffset);
 
   // viewport/document dimension - HTML
@@ -94,9 +98,12 @@ btnScrollTo.addEventListener('click', e => {
     // document.documentElement.clientWidth
     document.querySelector('html').clientWidth
   );
-    
-    // old way
-    window.scrollTo(s1coords.left + window.pageXOffset, s1coords.top + window.pageYOffset)
+
+  // note - Same as above to get Viewport width & height
+  console.log(window.innerWidth, window.innerHeight);
+
+  // old way to scroll from top of the page, not on current Viewport
+  window.scrollTo(s1coords.left + window.pageXOffset, s1coords.top + window.pageYOffset);
 
   // modern way by selecting element
   section1.scrollIntoView({ behavior: 'smooth' });
@@ -150,31 +157,38 @@ console.log(h1.nextElementSibling);
 /* Modern way of doing same as above or selecting elements */
 // console.log(document.querySelector('head')); // single element
 
-// Returns NodeList(4) - NodeList CANNOT UPDATE
-// console.log(document.querySelectorAll('.section')); // array of multiple elements
+// Returns NodeList(4) - NodeList DOES NOT UPDATE Automatically after deletion
+console.log(document.querySelectorAll('.section')); // array of multiple elements
 
-// console.log(document.getElementById('section--1')); // by id
+console.log(document.getElementById('section--1')); // by id
 
-// Returns HTMLCollection(9) - HTMLCollection CAN UPDATE
+// Returns HTMLCollection(9) - HTMLCollection UPDATE Automatically after deletion
 console.log(document.getElementsByTagName('button')); // array of multiple elements
 
 // Returns HTMLCollection(5)
-// console.log(document.getElementsByClassName('btn'));
+console.log(document.getElementsByClassName('btn'));
+
+// NOTE - .parentElement us to select Parent Element, element.children is to select Child Element
+// element.parentElement.parentElement - to select top parent element
 
 /* Creating & Inserting Elements */
-
 // creating dom element
 const message = document.createElement('div');
 
 // adding class name
 message.classList.add('cookie-message');
 
-// adding text
+// note: textContent is same as .innerText but
+// .textContent preserves Spacing, Indentation & displays Text inside of <script> if any as well.
 // message.textContent = 'we use cookies to improve functionalities & analytics.';
 
+// .innerHTML is to get all the Text with HTML Tags
 // inserting html element
 message.innerHTML =
   'we use cookies to improve functionalities & analytics. <button class="btn btn--close-cookie">Got it</button>';
+
+// note - .innerText vs .innerHTML, big difference when Setting Elements
+// Use .innerText only when working with Text but not Tags
 
 // Inserting into Header element
 const headerElement = document.querySelector('header');
@@ -207,10 +221,16 @@ message.style.width = '100%';
 // to access Styles defined in our styling & default styles
 // console.log(getComputedStyle(message).height);
 
-// manually updating the default height
-message.style.height =
-  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+// note - Window.getComputedStyle() method returns an object containing the values of all CSS properties of an element
+console.log(getComputedStyle(message).color); // rgb(187, 187, 187)
+
+// manually updating the default height by adding 30px
+message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
 // console.log(getComputedStyle(message).height);
+
+// note: .classList.add()
+// The classList property returns the CSS 'classnames' of an element.
+// The classList property returns a DOMTokenList which are methods to work with.
 
 // setProperty - to update styles directly in CSS Variables
 // documentElement is to select entire document object/DOM
@@ -218,7 +238,18 @@ document.documentElement.style.setProperty('--color-primary', 'orangered');
 
 // Attributes
 const logo = document.querySelector('.nav__logo');
-// console.log(logo.className);
+console.log(logo.className);
+console.log(logo.alt);
 
+// absolute with http://
+console.log(logo.src);
+// relative
+console.log(logo.getAttribute('src'));
+
+// Setting Custom attribute
+logo.setAttribute('company', 'Bankist');
+
+// DATA ATTRIBS
 // accessing custom Data attribute with 'dataset'
-// console.log(logo.dataset.versionNumber);
+// versionNumber- camel case to access dataset value
+console.log(logo.dataset.versionNumber);

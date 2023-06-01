@@ -79,8 +79,7 @@ for (let color of colors) {
 const input = document.querySelector('#username');
 
 // note - Three options for listening for event in input
-// note - keydown: shift, tab, caps lock, command, control etc on any key press down
-// and characters on any key press of any keys
+// note - keydown: shift, tab, caps lock, command, control, numbers etc and all characters on any key press down
 input.addEventListener('keydown', function (e) {
   console.log('keydown');
 });
@@ -90,7 +89,7 @@ input.addEventListener('keyup', function (e) {
   console.log('keyup');
 });
 
-// keypress is only on characters + enter/return key
+// keypress is only on all characters + enter/return key
 document.body.addEventListener('keypress', function (e) {
   // note - information about current event
   console.log('keypress');
@@ -161,8 +160,7 @@ for (let input of [creditCard, termsCheckbox, veggieSelect]) {
     console.log(e);
     // console.log(e.target.name);
     // Creating object with Input fields name prop as key & values from input elements
-    formDataTwo[e.target.name] =
-      e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    formDataTwo[e.target.name] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
   });
 }
 

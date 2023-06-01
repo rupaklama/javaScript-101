@@ -5,21 +5,31 @@ const multer = require('multer');
 
 const productsRepo = require('../../repositories/products');
 const newProductTemplate = require('../../views/admin/products/newProduct');
+const productsIndexTemplate = require('../../views/admin/products/index');
+const productsEditTemplate = require('../../views/admin/products/editProduct');
+const { requireAuth } = require('../../views/admin/middlewares');
 
 const router = express.Router();
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.get('/admin/products', (req, res) => {
-  res.status(200).send('products!');
+router.get('/admin/products', requireAuth, async (req, res) => {
+  // if (!req.session.userId) {
+  //   return res.redirect('/users/signin');
+  // }
+
+  const products = await productsRepo.getAll();
+  res.status(200).send(productsIndexTemplate({ products }));
 });
 
-router.get('/admin/products/new', (req, res) => {
+router.get('/admin/products/new', requireAuth, (req, res) => {
   res.status(200).send(newProductTemplate({}));
 });
 
 router.post(
   '/admin/products/new',
+
+  requireAuth,
 
   // note - this needs to come before all below middleware
   upload.single('image'),
@@ -49,8 +59,18 @@ router.post(
 
     await productsRepo.create({ title, price, image });
 
-    res.status(201).send('submitted!');
+    res.status(201).redirect('/admin/products');
   }
 );
+
+router.get('/admin/products/:id/edit', requireAuth, async (req, res) => {
+  const product = await productsRepo.getOne(req.params.id);
+
+  if (!product) {
+    return res.status(404).send('Product not found');
+  }
+
+  res.status(200).send(productsEditTemplate({ product }));
+});
 
 module.exports = router;

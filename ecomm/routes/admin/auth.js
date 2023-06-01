@@ -12,8 +12,8 @@ router.get('/users/signup', (req, res) => {
   res.send(signupTemplate({ req }));
 });
 
-// Validation checks if an input meets a set of criteria
 // Sanitization modifies the input to ensure that it is valid (such as removing white spaces).
+// Validation checks if an input meets a set of criteria
 router.post(
   '/users/signup',
   [
@@ -28,7 +28,7 @@ router.post(
       // note - Centralizing or merging all validations together (express & our custom validations)
       // so that we can do only one single check to see if anything went wrong with 'Custom Validator'
       // A custom validator may be implemented by using the chain method .custom(). It takes a validator function.
-      .custom(async email => {
+      .custom(async (email) => {
         const existingUser = await usersRepo.getOneBy({ email });
 
         if (existingUser) {
@@ -39,12 +39,7 @@ router.post(
     check('passwordConfirmation')
       .trim()
       .isLength({ min: 4, max: 20 })
-      .withMessage('Must be between 4 and 20 characters')
-      .custom((passwordConfirmation, { req }) => {
-        if (req.body.password !== passwordConfirmation) {
-          throw new Error('Passwords must match');
-        }
-      }),
+      .withMessage('Must be between 4 and 20 characters'),
   ],
   async (req, res) => {
     // 'validationResult' - Extracts the validation errors of an express request & returns it
@@ -57,7 +52,11 @@ router.post(
       return res.send(signupTemplate({ req, errors }));
     }
 
-    const { email, password } = req.body;
+    const { email, password, passwordConfirmation } = req.body;
+
+    if (password !== passwordConfirmation) {
+      throw new Error('Passwords must match');
+    }
 
     // Create a user in our user repo to represent this person
     const user = await usersRepo.create({ email, password });
@@ -65,13 +64,13 @@ router.post(
     // Store the id of that user inside the users cookie
     // note - cookie-session lib adds a property '.session' in the Request Object
     // req.session === {} we can add many properties in it
-    // note - When we call res.send, the cookie-session lib will automatically look at the object &
+    // note - On every request, the cookie-session lib will automatically look at the object &
     // find out if any data has been changed, code it simple strings then
     // attached to the Response header & stored in the browser
     req.session.userId = user.id;
     // note - adding .userId property in the session object
 
-    res.status(200).send('Account created!!!');
+    res.redirect('/admin/products');
   }
 );
 
@@ -87,7 +86,7 @@ router.post(
       .normalizeEmail()
       .isEmail()
       .withMessage('Must provide a valid email')
-      .custom(async email => {
+      .custom(async (email) => {
         const user = await usersRepo.getOneBy({ email });
         if (!user) {
           throw new Error('Email not found!');
@@ -123,7 +122,7 @@ router.post(
 
     req.session.userId = user.id;
 
-    res.status(200).send('You are signed in!!!');
+    res.redirect('/admin/products');
   }
 );
 
