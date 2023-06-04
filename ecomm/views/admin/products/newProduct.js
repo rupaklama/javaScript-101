@@ -30,6 +30,6 @@ module.exports = ({ errors }) => {
           </form>
         </div>
       </div>
-    `
+    `,
   });
 };
