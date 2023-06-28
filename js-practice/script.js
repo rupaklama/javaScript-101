@@ -90,6 +90,8 @@ btnScrollTo.addEventListener('click', e => {
   // pageXOffset - read-only Window property pageXOffset is an alias for scrollX
   // pageYOffset - vertical scroll position from the top of the Page to the element
   console.log('Current scroll (x/y)', window.pageXOffset, window.pageYOffset);
+  // note - same as above
+  console.log('Current scroll (x/y)', window.screenX, window.scrollY);
 
   // viewport/document dimension - HTML
   console.log(
