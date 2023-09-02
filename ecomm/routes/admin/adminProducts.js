@@ -24,6 +24,11 @@ router.get('/admin/products', requireAuth, async (req, res) => {
 });
 
 router.get('/admin/products/new', requireAuth, (req, res) => {
+  // on getting data in the req.body
+  req.on('data', {
+    // console.log(data.toString())
+  });
+
   res.status(200).send(newProductTemplate({}));
 });
 
@@ -32,7 +37,8 @@ router.post(
 
   requireAuth,
 
-  // note - this needs to come before all below middleware
+  // note - this needs to come before all below validations middleware
+  // 'image' input field name or request query url
   upload.single('image'),
 
   [
@@ -54,7 +60,7 @@ router.post(
       return res.send(newProductTemplate({ errors }));
     }
 
-    // base64 - safely represents image in string format
+    // NOTE: base64 - safely represents image in string format with Bytes
     const image = req.file.buffer.toString('base64');
     const { title, price } = req.body;
 

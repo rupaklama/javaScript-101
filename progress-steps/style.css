@@ -23,6 +23,7 @@ body {
 
 .container {
   text-align: center;
+  /* transform: rotate(90deg); */
 }
 
 .progress-container {

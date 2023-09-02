@@ -8,6 +8,7 @@ module.exports = ({ errors }) => {
         <div class="column is-half">
           <h1 class="subtitle">Create a Product</h1>
 
+          <!-- enctype="multipart/form-data": to transfer raw data from the file into safe url strings -->
           <form method="POST" enctype="multipart/form-data">
             <div class="field">
               <label class="label">Title</label>
