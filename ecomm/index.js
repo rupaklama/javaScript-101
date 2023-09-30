@@ -1,4 +1,4 @@
-const express = require('express');
+constexpress = require('express');
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 
@@ -22,7 +22,6 @@ app.use(express.static(`${__dirname}/public`));
 // middleware that works with "multipart/form-data" such as 'Multer' to convert
 // image/video data into Buffer data with Bytes.
 app.use(bodyParser.urlencoded({ extended: true }));
-
 // app.use(express.json());
 
 app.use(

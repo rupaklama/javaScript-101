@@ -9,8 +9,8 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 /* scrolling */
-const btnScrollTo = document.querySelector('.btn--scroll-to'); // Learn more btn
-const section1 = document.querySelector('#section--1');
+// const btnScrollTo = document.querySelector('.btn--scroll-to'); // Learn more btn
+// const section1 = document.querySelector('#section--1');
 
 // Event Delegation is when event bubbles up to the parent elements
 // document.querySelectorAll('.nav__link').forEach(el => {
@@ -27,19 +27,19 @@ const section1 = document.querySelector('#section--1');
 // note above is not just an Efficient solution when there are many links
 // therefore, Event Delegation will solve the above issue with performance
 // note - we do this by putting an Event Listener to the Common Parent of all the Elements we want
-document.querySelector('.nav__links').addEventListener('click', e => {
-  e.preventDefault();
+// document.querySelector('.nav__links').addEventListener('click', e => {
+//   e.preventDefault();
 
-  // note - 'target' is the element that generated the event
-  // 'currentTarget' is the element that the addEventListener is attached too
-  console.log('target', e.target, e.currentTarget);
+//   // note - 'target' is the element that generated the event
+//   // 'currentTarget' is the element that the addEventListener is attached too
+//   console.log('target', e.target, e.currentTarget);
 
-  // NOTE - The Event Bubbles up to the Parent element to make this work
-  if (e.target.classList.contains('nav__link')) {
-    const id = e.target.getAttribute('href');
-    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
-  }
-});
+//   // NOTE - The Event Bubbles up to the Parent element to make this work
+//   if (e.target.classList.contains('nav__link')) {
+//     const id = e.target.getAttribute('href');
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   }
+// });
 
 // Tabbed component
 const tabs = document.querySelectorAll('.operations__tab');
@@ -50,32 +50,32 @@ const tabsContent = document.querySelectorAll('.operations__content');
 tabsContainer.addEventListener('click', e => {
   e.preventDefault();
 
-  // closest method is to Find the closest element that matches the CSS selector
-  // returns 'null' if no matching element found
-  const clicked = e.target.closest('.operations__tab');
-  // console.log(clicked);
+  // The closest() method starts at the element itself, then the ancestors (parent, grandparent, ...)
+  // until a match is found. The closest() method returns null() if no match is found.
+  const clickedElement = e.target.closest('.operations__tab');
+  console.log(clickedElement);
 
   // guard clause
-  if (!clicked) return;
+  if (!clickedElement) return;
 
   // remove active classes on button click
   tabs.forEach(t => t.classList.remove('operations__tab--active'));
   tabsContent.forEach(c => c.classList.remove('operations__content--active'));
 
   // add class for active tab
-  clicked.classList.add('operations__tab--active');
+  clickedElement.classList.add('operations__tab--active');
 
   // Select active content area element at the same time dynamically with data attrib
-  // console.log(clicked.dataset.tab); // to access data attrib value
+  // console.log(clickedElement.dataset.tab); // to access data attrib value
   document
-    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .querySelector(`.operations__content--${clickedElement.dataset.tab}`)
     // after selecting add a class for style
     .classList.add('operations__content--active');
 });
 
 // TEST - OLD WAY
-// const btnScrollTo = document.querySelector('.btn--scroll-to'); // Learn more btn
-// const section1 = document.querySelector('#section--1');
+const btnScrollTo = document.querySelector('.btn--scroll-to'); // Learn more btn
+const section1 = document.querySelector('#section--1');
 btnScrollTo.addEventListener('click', e => {
   // The getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
   // getBoundingClientRect() method returns a DOMRect object with eight properties: left, top, right, bottom, x, y, width, height.
@@ -244,7 +244,7 @@ console.log(logo.className);
 console.log(logo.alt);
 
 // absolute with http://
-console.log(logo.src);
+console.log('http:', logo.src);
 // relative
 console.log(logo.getAttribute('src'));
 
