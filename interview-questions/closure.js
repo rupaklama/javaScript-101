@@ -32,7 +32,7 @@ function counter() {
   };
 }
 
-// note: the closer value is available outside the function after the closure is executed
+// note: the closer value is available outside the function in a variable after the closure is executed
 // addCount property has access into the Closure after 'storing' closure into it
 const addCount = counter();
 console.log(addCount.getValue());

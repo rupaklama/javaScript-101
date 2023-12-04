@@ -1,7 +1,7 @@
 // note: Variable, function and class declaration are moved to the top of the scope in js.
 // We can access values before executing the declarations.
 
-// note: All variables are hoisted. VAR is initialized with 'undefined' but not 'let & const'
+// note: All variables are hoisted. VAR is initialized with 'undefined' but not 'let, const & class'
 // It is always GOOD to use Let & Const to prevent 'initialization' errors
 // ReferenceError:  Cannot access 'variable' before initialization
 
