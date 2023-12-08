@@ -1,3 +1,8 @@
+// Promise is an Object which returns a value in the future after handling async operations
+// Promises are used to handle asynchronous operations in JavaScript.
+// They are easy to manage when dealing with multiple asynchronous operations where
+// Callbacks can create callback hell leading to unmanageable code.
+
 // create promise
 const willGetYouDog = () => {
   return new Promise((resolve, reject) => {
