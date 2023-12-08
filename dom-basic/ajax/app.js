@@ -60,18 +60,6 @@ axios
     console.log(err);
   });
 
-// Async Function is an easier short cut syntax to return Promise without doing this - new Promise(res, reject => {})
-// note - adding 'async' keyword front of the function will always return a Promise
-// If the function returns a value, the promise will be resolved with that value
-// If the function throws an exception, the promise will be rejected
-async function greet() {
-  return 'hello';
-}
-// Promise {<fulfilled>: 'hello'}
-greet().then(val => {
-  console.log('resolved', val);
-});
-
 // function getPlanets() {
 //   return axios.get('https://swapi.dev/api/planets');
 // }

@@ -98,7 +98,9 @@ btnScrollTo.addEventListener('click', e => {
     'height/width viewport',
     document.documentElement.clientHeight,
     // document.documentElement.clientWidth
-    document.querySelector('html').clientWidth
+    document.querySelector('html').clientWidth,
+    // same as above
+    document.body.clientWidth
   );
 
   // note - Same as above to get Viewport width & height

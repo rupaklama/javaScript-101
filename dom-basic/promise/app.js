@@ -8,7 +8,7 @@
 const willGetYouDog = () =>
   new Promise((resolve, reject) => {
     // 1. note - On calling promise, promise starts with 'Pending' state always at first
-    // don't matter if resolve or reject has been call or not
+    // don't matter if resolve or reject and has been call or not
 
     // 2. if we call resolve, promise is resolved or fulfilled
     // resolve();
@@ -57,11 +57,13 @@ const fakeRequest = url => {
       const data = pages[url];
 
       if (data) {
+        // note: can pass multiple param args as values
         resolve({
           status: 200,
           data: data,
         });
       } else {
+        // note: can pass multiple param args as values
         reject({ status: 404 });
       }
     }, 1000);

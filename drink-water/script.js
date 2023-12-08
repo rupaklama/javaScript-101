@@ -11,17 +11,17 @@ smallCups.forEach((cup, idx) => {
   cup.addEventListener('click', () => highlightCups(idx));
 });
 
-function highlightCups(idx) {
+function highlightCups(clickedIdx) {
   if (
-    smallCups[idx].classList.contains('full') &&
-    !smallCups[idx].nextElementSibling.classList.contains('full')
+    smallCups[clickedIdx].classList.contains('full') &&
+    !smallCups[clickedIdx].nextElementSibling.classList.contains('full')
   ) {
-    idx--;
+    clickedIdx--;
   }
 
-  smallCups.forEach((cup, idx2) => {
+  smallCups.forEach((cup, currentIdx) => {
     // all the ones before should filled up on clicking the current one as well
-    if (idx2 <= idx) {
+    if (currentIdx <= clickedIdx) {
       cup.classList.add('full');
     } else {
       cup.classList.remove('full');
@@ -52,6 +52,7 @@ function updateBigCup() {
     remained.style.height = 0;
   } else {
     remained.style.visibility = 'visible';
+    // liters count, 2 - total liters
     liters.innerText = `${2 - (250 * fullCups) / 1000}L`;
   }
 }
