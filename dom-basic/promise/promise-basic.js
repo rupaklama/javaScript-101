@@ -42,7 +42,7 @@ const fakeRequest = url => {
 
       if (rand < 0.3) {
         // note: can pass multiple param args as values
-        reject({ status: 404, error: 'Not Found' });
+        reject({ status: 404, error: 'Not Found' }, 'rejected');
       } else {
         const pages = {
           '/users': [

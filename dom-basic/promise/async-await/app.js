@@ -11,10 +11,10 @@ greet().then(val => {
   console.log('resolved', val);
 });
 
-// note: Rejected Promise - If we throw an Error/Exception, that promise will be Rejected
+// note: Reject Promise - If we throw an Error/Exception, that promise will be Rejected
 async function add(x, y) {
   if (typeof x !== 'number' || typeof x !== 'number') {
-    throw 'X and Y must be numbers';
+    throw 'X and Y must be numbers'; // reject promise
   }
   // NOTE: when returning a 'value', a promise is resolved
   return x + y;
@@ -67,14 +67,14 @@ async function getPlanets() {
     const data = await response.json();
     console.log(data);
   } catch (error) {
-    // on promise reject - reject() on catch
+    // Catch is on promise reject
     console.log('in catch =>', error);
     return error;
   }
 }
 console.log(getPlanets());
 
-// note: one way to catch error but very useful when Chaining Multiple Promises with .then()
+// note: one way to catch error and very useful when Chaining Multiple Promises with .then()
 // getPlanets().catch(err => {
 //   console.log('Caught', err);
 // });
@@ -96,7 +96,7 @@ async function get3Pokemon() {
     const poke2 = fetch('https://pokeapi.co/api/v2/pokemon/2');
     const poke3 = fetch('https://pokeapi.co/api/v2/pokemon/3');
 
-    // note: The second promise will not resolve until the first one is fulfilled and so on
+    // note: The second promise below will not resolve until the first one is fulfilled and so on
     const poke1Res = await poke1;
     const prom1 = await poke1Res.json();
 
