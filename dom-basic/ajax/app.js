@@ -4,7 +4,7 @@ fetch('/api/1.0/users', {
   headers: {
     'Content-Type': 'application/json',
   },
-  // body: JSON.stringify(body),
+  body: JSON.stringify(data),
 });
 
 // fetch api basic

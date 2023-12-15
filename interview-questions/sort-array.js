@@ -15,7 +15,7 @@ function sortByLastName(arr) {
     const author1LastName = a.author.split(' ')[1];
     const author2LastName = b.author.split(' ')[1];
 
-    // note - must use -1 & 1 since we can't subtract strings
+    // note - must use '-1 & 1' since we can't Subtract Strings
     // if return > 0 then B is before A - switch order
     // if return < 0 then A is before B - keep order
     // return author1LastName < author2LastName ? -1 : 1; // ascending order
