@@ -14,13 +14,13 @@ const app = express();
 app.use(express.static(`${__dirname}/public`));
 // app.use(express.static('public'));
 
-// note - urlencoded({ extended: true } meaning form data being send as url query string format, not bytes
-// enctype="multipart/form-data": to transfer raw data from the file such as image into safe url strings like bytes
-// "multipart/form-data" meaning multiple part of form data being send as pure raw file data
+// note - urlencoded({ extended: true } meaning form data being send as url query string format, not as raw data
+// enctype="multipart/form-data": to transfer raw data from the file such as image into safe url strings
+// "multipart/form-data" meaning multiple part of form data being send as raw file data
 // note: "multipart/form-data" will not work with default urlencoded({}) because
-// the body parser only cares url encoded post request but not bytes. To fix this issue, need to use
-// middleware that works with "multipart/form-data" such as 'Multer' to convert
-// image/video data into Buffer data with Bytes.
+// the body parser only cares url encoded query string format but not raw data. Images, video etc contains raw data.
+// To fix this issue, need to use middleware that works with "multipart/form-data" such as 'Multer' to convert
+// 'raw image/video data' into 'Buffer data' with Bytes. Then, convert all bits in Bytes into string characters.
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.json());
 

@@ -1,4 +1,4 @@
-// note: 'this' always not refers to Window object.
+// note: 'this' always does not refer to Window object.
 // note: Inside Function, 'this' refers to the Global Object which could be Window, undefined or
 // something else as it always depends on the Context.
 
@@ -47,7 +47,7 @@ class Item {
     });
 
     // Newer Approach using Arrow Function ES6
-    // NOTE: Arrow Function does not have binding of 'this', it context depends on Parent Scope
+    // NOTE: Arrow Function do not have binding of 'this', it context depends on the Parent Scope
     [1, 2, 3].map(item => {
       console.log(this);
     });

@@ -76,6 +76,6 @@ async function getPlanets() {
   } catch (error) {
     // on promise reject - reject()
     console.log(error);
-    throw Error('bad request');
+    return Error('bad request');
   }
 }
